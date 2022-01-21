@@ -2,11 +2,15 @@ import axios, { AxiosInstance } from 'axios';
 
 class Http {
   private baseURL: string;
+  private itemURL: string;
   instance: AxiosInstance;
+  itemInstance: AxiosInstance;
 
   constructor() {
     this.baseURL = process.env.REACT_APP_BASE_URL || '';
+    this.itemURL = process.env.REACT_APP_ITEM_URL || '';
     this.instance = axios.create({ baseURL: this.baseURL, timeout: 10000 });
+    this.itemInstance = axios.create({ baseURL: this.itemURL, timeout: 10000 });
 
     this.initialize();
   }
