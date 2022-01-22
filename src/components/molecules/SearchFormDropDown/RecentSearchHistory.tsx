@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import IconFavoriteOn from 'assets/images/icon-favorite-on.png';
 import IconFavoriteOff from 'assets/images/icon-favorite-off.png';
 import IconHistoryDelete from 'assets/images/icon-history-delete.png';
-import { deleteCookie, getCookie } from 'utils/cookieHelper';
-import EmptyHistory from 'components/atoms/EmptyHistory';
-import { _HIST } from 'utils/constants';
+import { addCookie, deleteCookie, getCookie } from 'utils/cookieHelper';
+import { _FAV, _HIST } from 'utils/constants';
+import EmptySummoner from 'components/atoms/EmptySummoner';
 
 interface IRecentSearchHistory {
   setShowDropDown: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,8 +16,9 @@ interface IRecentSearchHistory {
 export default function RecentSearchHistory({ setShowDropDown }: IRecentSearchHistory) {
   const navigate = useNavigate();
 
-  const onClickButtonFavorite = () => {
-    console.log('즐겨찾기');
+  const onClickButtonFavorite = (userName: string) => () => {
+    addCookie(_FAV, userName);
+    setShowDropDown(false);
   };
 
   const onClickButtonHistoryDelete = (userName: string) => () => {
@@ -35,12 +36,14 @@ export default function RecentSearchHistory({ setShowDropDown }: IRecentSearchHi
   return (
     <Container>
       {userHistories.every((user) => user === '') ? (
-        <EmptyHistory />
+        <EmptySummoner>
+          <div>최근에 본 소환사가 없습니다.</div>
+        </EmptySummoner>
       ) : (
         userHistories.map((user, idx) => (
           <Row key={idx}>
             <UserName onClick={onClickUserName(user)}>{user}</UserName>
-            <Favorite onClick={onClickButtonFavorite}>
+            <Favorite onClick={onClickButtonFavorite(user)}>
               <img src={IconFavoriteOff} alt="소환사 즐겨찾기" />
             </Favorite>
             <HistoryDelete onClick={onClickButtonHistoryDelete(user)}>

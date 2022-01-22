@@ -1,14 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function EmptyHistory() {
+interface IEmptySummoner {
+  children?: React.ReactNode;
+}
+
+export default function EmptySummoner({ children }: IEmptySummoner) {
   return (
     <Container>
       <Icon
         src="https://opgg-static.akamaized.net/images/site/icon-history-info@2x.png"
-        alt="최근에 본 소환사가 없습니다."
+        alt="소환사가 없습니다."
       />
-      <div>최근에 본 소환사가 없습니다.</div>
+      <div>{children}</div>
     </Container>
   );
 }
