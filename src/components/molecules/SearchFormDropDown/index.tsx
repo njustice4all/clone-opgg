@@ -5,10 +5,10 @@ import RecentSearchHistory from './RecentSearchHistory';
 import FavoriteSearch from './FavoriteSearch';
 
 interface ISearchFormDropDown {
-  setShowDropDown: React.Dispatch<React.SetStateAction<boolean>>;
+  closeAll(): void;
 }
 
-export default function SearchFormDropDown({ setShowDropDown }: ISearchFormDropDown) {
+export default function SearchFormDropDown({ closeAll }: ISearchFormDropDown) {
   const [activeTab, setActiveTab] = useState('recent');
 
   const onClickTab = (tab: 'recent' | 'favorite') => () => {
@@ -26,9 +26,9 @@ export default function SearchFormDropDown({ setShowDropDown }: ISearchFormDropD
         </Tab>
       </TabHeader>
       {activeTab === 'recent' ? (
-        <RecentSearchHistory setShowDropDown={setShowDropDown} />
+        <RecentSearchHistory closeAll={closeAll} />
       ) : (
-        <FavoriteSearch setShowDropDown={setShowDropDown} />
+        <FavoriteSearch closeAll={closeAll} />
       )}
     </Container>
   );

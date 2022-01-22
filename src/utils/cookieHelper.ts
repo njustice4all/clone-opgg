@@ -4,7 +4,19 @@ export const addCookie = (key: string, newName: string) => {
   if (getCookie(key)) {
     const userNames = getCookie(key);
     const hasName = userNames.split('$').some((userName) => userName === newName);
-    if (hasName) return;
+    // 이미 검색했던거 또 새로함
+    if (hasName) {
+      const newUserNames = userNames.split('$').reduce<string[]>((acc, userName) => {
+        if (userName !== newName) {
+          acc.push(userName);
+        }
+        return acc;
+      }, []);
+      const results = [newName, ...newUserNames].join('$');
+
+      document.cookie = `${key}=${encodeURIComponent(results)}; max-age=${YEAR}`;
+      return;
+    }
 
     document.cookie = `${key}=${encodeURIComponent(newName)}$${encodeURIComponent(
       userNames

@@ -1,47 +1,53 @@
 import { useDispatch } from 'react-redux';
-import React, { MouseEvent, KeyboardEvent, useState, useRef, useEffect } from 'react';
+import React, { MouseEvent, KeyboardEvent, useState, useRef } from 'react';
 import styled from 'styled-components';
 
 import SearchLogo from '../../../assets/images/00-icon-gg.svg';
 import SearchFormDropDown from '../SearchFormDropDown';
-import useClickOutside from 'hooks/useClickOutside';
 import { addCookie } from 'utils/cookieHelper';
 import { _HIST } from 'utils/constants';
-import { actionGetSummoner } from 'modules/summoner/summoner.actions';
+import { actionClickSummoner, actionGetSummonerSuggest } from 'modules/summoner/summoner.actions';
+import SummonerAutoComplete from '../SearchFormDropDown/SummonerAutoComplete';
+import useOnClickOutside from 'hooks/useOnClickOutside';
 
 export default function SummonerSearchForm() {
   const ref = useRef(null);
   const dispatch = useDispatch();
   const [userName, setUserName] = useState('');
-  const [showDropDown, setShowDropDown] = useState(false);
-  const isClickOutside = useClickOutside(ref);
-
-  useEffect(() => {
-    if (isClickOutside) {
-      setShowDropDown(false);
-    }
-  }, [isClickOutside]);
+  const [visibleDropDown, setVisibleDropDown] = useState({ recent: false, auto: false });
+  useOnClickOutside(ref, () => setVisibleDropDown({ recent: false, auto: false }));
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // TODO: SearchFormDropDown에 props로 display block상태 전달
+    setVisibleDropDown((dropDown) => ({ ...dropDown, auto: true }));
     setUserName(e.target.value);
+    dispatch(actionGetSummonerSuggest.request({ userName: e.target.value }));
   };
 
   const onKeyUp = (e: KeyboardEvent) => {
-    if (userName === '') return;
-    if (e.key === 'Enter') {
-      addCookie(_HIST, userName);
-      setUserName('');
-      setShowDropDown(false);
-      dispatch(actionGetSummoner.request({ userName }));
+    if (e.key === 'Enter' && userName !== '') {
+      submit();
     }
   };
 
   const onClickInput = () => {
-    setShowDropDown(true);
+    setVisibleDropDown((dropDown) => ({ ...dropDown, recent: true }));
   };
 
-  const onClickButtonSummit = (e: MouseEvent) => {};
+  const onClickButtonSummit = (e: MouseEvent) => {
+    if (userName !== '') {
+      submit();
+    }
+  };
+
+  const submit = () => {
+    addCookie(_HIST, userName);
+    setUserName('');
+    setVisibleDropDown({ recent: false, auto: false });
+    dispatch(actionClickSummoner(userName));
+  };
+
+  const isShowAutoComplete = visibleDropDown.auto && userName !== '';
+  const isShowDropDown = visibleDropDown.recent && userName === '';
 
   return (
     <Form ref={ref}>
@@ -52,11 +58,15 @@ export default function SummonerSearchForm() {
         onKeyUp={onKeyUp}
         onClick={onClickInput}
         value={userName}
+        onFocus={() => setVisibleDropDown((dropDown) => ({ ...dropDown, auto: true }))}
       />
       <Button onClick={onClickButtonSummit}>
         <img src={SearchLogo} alt="소환사 검색" />
       </Button>
-      {showDropDown && <SearchFormDropDown setShowDropDown={setShowDropDown} />}
+      {isShowAutoComplete && <SummonerAutoComplete submit={submit} userName={userName} />}
+      {isShowDropDown && (
+        <SearchFormDropDown closeAll={() => setVisibleDropDown({ recent: false, auto: false })} />
+      )}
     </Form>
   );
 }
@@ -95,6 +105,7 @@ const Button = styled.button`
   line-height: 32px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 
   img {
     width: 30px;

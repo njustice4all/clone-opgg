@@ -9,20 +9,20 @@ import { deleteCookie, getCookie } from 'utils/cookieHelper';
 import EmptySummoner from 'components/atoms/EmptySummoner';
 
 interface IFavoriteSearch {
-  setShowDropDown: React.Dispatch<React.SetStateAction<boolean>>;
+  closeAll(): void;
 }
 
-export default function FavoriteSearch({ setShowDropDown }: IFavoriteSearch) {
+export default function FavoriteSearch({ closeAll }: IFavoriteSearch) {
   const navigate = useNavigate();
 
   const onClickUserName = (userName: string) => () => {
-    setShowDropDown(false);
+    closeAll();
     navigate(`/summoner/${userName}`);
   };
 
-  const onClickButtonHistoryDelete = (userName: string) => () => {
-    deleteCookie(_FAV, userName);
-    setShowDropDown(false);
+  const onClickButtonHistoryDelete = (userName: string, idx: number) => () => {
+    deleteCookie(_FAV, idx);
+    closeAll();
   };
 
   const favoriteUsers = getCookie(_FAV).split('$');
@@ -41,7 +41,7 @@ export default function FavoriteSearch({ setShowDropDown }: IFavoriteSearch) {
         favoriteUsers.map((user, idx) => (
           <Row key={idx}>
             <UserName onClick={onClickUserName(user)}>{user}</UserName>
-            <HistoryDelete onClick={onClickButtonHistoryDelete(user)}>
+            <HistoryDelete onClick={onClickButtonHistoryDelete(user, idx)}>
               <img src={IconHistoryDelete} alt="소환사 검색 내역 제거" />
             </HistoryDelete>
           </Row>
