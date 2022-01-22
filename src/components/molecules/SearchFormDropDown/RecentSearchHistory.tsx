@@ -16,12 +16,12 @@ interface IRecentSearchHistory {
 export default function RecentSearchHistory({ closeAll }: IRecentSearchHistory) {
   const navigate = useNavigate();
 
-  const onClickButtonFavorite = (userName: string, idx: number) => () => {
+  const onClickButtonFavorite = (userName: string) => () => {
     const hasFavorite = getCookie(_FAV)
       .split('$')
       .some((favoriteUser) => favoriteUser === userName);
     if (hasFavorite) {
-      deleteCookie(_FAV, idx);
+      deleteCookie(_FAV, userName);
     } else {
       addCookie(_FAV, userName);
     }
@@ -29,8 +29,8 @@ export default function RecentSearchHistory({ closeAll }: IRecentSearchHistory) 
     closeAll();
   };
 
-  const onClickButtonHistoryDelete = (userName: string, idx: number) => () => {
-    deleteCookie(_HIST, idx);
+  const onClickButtonHistoryDelete = (userName: string) => () => {
+    deleteCookie(_HIST, userName);
     closeAll();
   };
 
@@ -52,7 +52,7 @@ export default function RecentSearchHistory({ closeAll }: IRecentSearchHistory) 
         userHistories.map((user, idx) => (
           <Row key={idx}>
             <UserName onClick={onClickUserName(user)}>{user}</UserName>
-            <Favorite onClick={onClickButtonFavorite(user, idx)}>
+            <Favorite onClick={onClickButtonFavorite(user)}>
               <img
                 src={
                   favoriteUsers.some((favoriteUser) => favoriteUser === user)
@@ -62,7 +62,7 @@ export default function RecentSearchHistory({ closeAll }: IRecentSearchHistory) 
                 alt="소환사 즐겨찾기"
               />
             </Favorite>
-            <HistoryDelete onClick={onClickButtonHistoryDelete(user, idx)}>
+            <HistoryDelete onClick={onClickButtonHistoryDelete(user)}>
               <img src={IconHistoryDelete} alt="소환사 검색 내역 제거" />
             </HistoryDelete>
           </Row>

@@ -20,8 +20,8 @@ export default function FavoriteSearch({ closeAll }: IFavoriteSearch) {
     navigate(`/summoner/${userName}`);
   };
 
-  const onClickButtonHistoryDelete = (userName: string, idx: number) => () => {
-    deleteCookie(_FAV, idx);
+  const onClickButtonHistoryDelete = (userName: string) => () => {
+    deleteCookie(_FAV, userName);
     closeAll();
   };
 
@@ -41,7 +41,7 @@ export default function FavoriteSearch({ closeAll }: IFavoriteSearch) {
         favoriteUsers.map((user, idx) => (
           <Row key={idx}>
             <UserName onClick={onClickUserName(user)}>{user}</UserName>
-            <HistoryDelete onClick={onClickButtonHistoryDelete(user, idx)}>
+            <HistoryDelete onClick={onClickButtonHistoryDelete(user)}>
               <img src={IconHistoryDelete} alt="소환사 검색 내역 제거" />
             </HistoryDelete>
           </Row>
