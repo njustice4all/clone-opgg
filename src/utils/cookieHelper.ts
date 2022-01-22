@@ -22,6 +22,11 @@ export const getCookie = (key: string) => {
 };
 
 export const deleteCookie = (key: string, deleteName: string) => {
+  if (getCookie(key) === deleteName) {
+    document.cookie = `${key}= ; expires=Thu, 01 Jan 1970 00:00:01 GMT`;
+    return;
+  }
+
   let newNames = '';
   if (getCookie(key).startsWith(deleteName)) {
     newNames = getCookie(key).replace(`${deleteName}$`, '');
