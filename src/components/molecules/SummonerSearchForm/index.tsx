@@ -5,6 +5,8 @@ import Http from '@http';
 import SearchLogo from '../../../assets/images/00-icon-gg.svg';
 import SearchFormDropDown from '../SearchFormDropDown';
 import useClickOutside from 'hooks/useClickOutside';
+import { addCookie, getCookie } from 'utils/cookieHelper';
+import { _HIST } from 'utils/constants';
 
 export default function SummonerSearchForm() {
   const ref = useRef(null);
@@ -24,11 +26,14 @@ export default function SummonerSearchForm() {
   };
 
   const onKeyUp = (e: KeyboardEvent) => {
+    if (userName === '') return;
     if (e.key === 'Enter') {
-      console.log('search now');
-      Http.instance.get(`/summoner/${userName}`).then((res) => {
-        console.log(res.data);
-      });
+      addCookie(_HIST, userName);
+      setUserName('');
+      setShowDropDown(false);
+      // Http.instance.get(`/summoner/${userName}`).then((res) => {
+      //   console.log(res.data);
+      // });
     }
   };
 
@@ -46,6 +51,7 @@ export default function SummonerSearchForm() {
         onChange={onChange}
         onKeyUp={onKeyUp}
         onClick={onClickInput}
+        value={userName}
       />
       <Button onClick={onClickButtonSummit}>
         <img src={SearchLogo} alt="소환사 검색" />

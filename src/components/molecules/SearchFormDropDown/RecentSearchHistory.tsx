@@ -5,20 +5,24 @@ import { useNavigate } from 'react-router-dom';
 import IconFavoriteOn from 'assets/images/icon-favorite-on.png';
 import IconFavoriteOff from 'assets/images/icon-favorite-off.png';
 import IconHistoryDelete from 'assets/images/icon-history-delete.png';
+import { deleteCookie, getCookie } from 'utils/cookieHelper';
+import EmptyHistory from 'components/atoms/EmptyHistory';
+import { _HIST } from 'utils/constants';
 
 interface IRecentSearchHistory {
   setShowDropDown: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-// TODO: 최근에 본 소환사가 없습니다.
 export default function RecentSearchHistory({ setShowDropDown }: IRecentSearchHistory) {
   const navigate = useNavigate();
+
   const onClickButtonFavorite = () => {
     console.log('즐겨찾기');
   };
 
   const onClickButtonHistoryDelete = (userName: string) => () => {
-    console.log('히스토리 삭제');
+    deleteCookie(_HIST, userName);
+    setShowDropDown(false);
   };
 
   const onClickUserName = (userName: string) => () => {
@@ -26,35 +30,25 @@ export default function RecentSearchHistory({ setShowDropDown }: IRecentSearchHi
     navigate(`/summoner/${userName}`);
   };
 
+  const userHistories = getCookie(_HIST).split('$');
+
   return (
     <Container>
-      <Row>
-        <UserName onClick={onClickUserName('인예지 어린이')}>인예지 어린이</UserName>
-        <Favorite onClick={onClickButtonFavorite}>
-          <img src={IconFavoriteOn} alt="소환사 즐겨찾기" />
-        </Favorite>
-        <HistoryDelete onClick={onClickButtonHistoryDelete('인예지 어린이')}>
-          <img src={IconHistoryDelete} alt="소환사 검색 내역 제거" />
-        </HistoryDelete>
-      </Row>
-      <Row>
-        <UserName onClick={onClickUserName('강개즈님')}>강개즈님</UserName>
-        <Favorite onClick={onClickButtonFavorite}>
-          <img src={IconFavoriteOn} alt="소환사 즐겨찾기" />
-        </Favorite>
-        <HistoryDelete onClick={onClickButtonHistoryDelete('강개즈님')}>
-          <img src={IconHistoryDelete} alt="소환사 검색 내역 제거" />
-        </HistoryDelete>
-      </Row>
-      <Row>
-        <UserName onClick={onClickUserName('동해물과백두산이')}>동해물과백두산이</UserName>
-        <Favorite onClick={onClickButtonFavorite}>
-          <img src={IconFavoriteOff} alt="소환사 즐겨찾기" />
-        </Favorite>
-        <HistoryDelete onClick={onClickButtonHistoryDelete('동해물과백두산이')}>
-          <img src={IconHistoryDelete} alt="소환사 검색 내역 제거" />
-        </HistoryDelete>
-      </Row>
+      {userHistories.every((user) => user === '') ? (
+        <EmptyHistory />
+      ) : (
+        userHistories.map((user, idx) => (
+          <Row key={idx}>
+            <UserName onClick={onClickUserName(user)}>{user}</UserName>
+            <Favorite onClick={onClickButtonFavorite}>
+              <img src={IconFavoriteOff} alt="소환사 즐겨찾기" />
+            </Favorite>
+            <HistoryDelete onClick={onClickButtonHistoryDelete(user)}>
+              <img src={IconHistoryDelete} alt="소환사 검색 내역 제거" />
+            </HistoryDelete>
+          </Row>
+        ))
+      )}
     </Container>
   );
 }
