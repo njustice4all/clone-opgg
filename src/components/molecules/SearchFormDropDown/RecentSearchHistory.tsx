@@ -17,7 +17,15 @@ export default function RecentSearchHistory({ setShowDropDown }: IRecentSearchHi
   const navigate = useNavigate();
 
   const onClickButtonFavorite = (userName: string) => () => {
-    addCookie(_FAV, userName);
+    const hasFavorite = getCookie(_FAV)
+      .split('$')
+      .some((favoriteUser) => favoriteUser === userName);
+    if (hasFavorite) {
+      deleteCookie(_FAV, userName);
+    } else {
+      addCookie(_FAV, userName);
+    }
+
     setShowDropDown(false);
   };
 
@@ -32,6 +40,7 @@ export default function RecentSearchHistory({ setShowDropDown }: IRecentSearchHi
   };
 
   const userHistories = getCookie(_HIST).split('$');
+  const favoriteUsers = getCookie(_FAV).split('$');
 
   return (
     <Container>
@@ -44,7 +53,14 @@ export default function RecentSearchHistory({ setShowDropDown }: IRecentSearchHi
           <Row key={idx}>
             <UserName onClick={onClickUserName(user)}>{user}</UserName>
             <Favorite onClick={onClickButtonFavorite(user)}>
-              <img src={IconFavoriteOff} alt="소환사 즐겨찾기" />
+              <img
+                src={
+                  favoriteUsers.some((favoriteUser) => favoriteUser === user)
+                    ? IconFavoriteOn
+                    : IconFavoriteOff
+                }
+                alt="소환사 즐겨찾기"
+              />
             </Favorite>
             <HistoryDelete onClick={onClickButtonHistoryDelete(user)}>
               <img src={IconHistoryDelete} alt="소환사 검색 내역 제거" />
