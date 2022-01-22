@@ -9,7 +9,7 @@ export const actionGetSummoner = createAsyncAction(
   GET_SUMMONER_REQUEST,
   GET_SUMMONER_SUCCESS,
   GET_SUMMONER_FAILURE
-)<RequestSummoner, ResponseSummoner>();
+)<RequestSummoner, ResponseSummoner, undefined>();
 
 const actions = { actionGetSummoner };
 

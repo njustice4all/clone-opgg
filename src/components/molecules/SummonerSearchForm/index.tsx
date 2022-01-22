@@ -1,15 +1,17 @@
+import { useDispatch } from 'react-redux';
 import React, { MouseEvent, KeyboardEvent, useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
-import Http from '@http';
 import SearchLogo from '../../../assets/images/00-icon-gg.svg';
 import SearchFormDropDown from '../SearchFormDropDown';
 import useClickOutside from 'hooks/useClickOutside';
-import { addCookie, getCookie } from 'utils/cookieHelper';
+import { addCookie } from 'utils/cookieHelper';
 import { _HIST } from 'utils/constants';
+import { actionGetSummoner } from 'modules/summoner/summoner.actions';
 
 export default function SummonerSearchForm() {
   const ref = useRef(null);
+  const dispatch = useDispatch();
   const [userName, setUserName] = useState('');
   const [showDropDown, setShowDropDown] = useState(false);
   const isClickOutside = useClickOutside(ref);
@@ -31,9 +33,7 @@ export default function SummonerSearchForm() {
       addCookie(_HIST, userName);
       setUserName('');
       setShowDropDown(false);
-      // Http.instance.get(`/summoner/${userName}`).then((res) => {
-      //   console.log(res.data);
-      // });
+      dispatch(actionGetSummoner.request({ userName }));
     }
   };
 

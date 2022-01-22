@@ -131,7 +131,7 @@ type MostChampion = {
   wins: number;
 };
 
-type Summoner = {
+export type Summoner = {
   ladderRank: LadderRank;
   leagues: League[];
   level: number;
