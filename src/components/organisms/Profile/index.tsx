@@ -4,16 +4,13 @@ import { useSelector } from 'react-redux';
 
 import { RootState } from 'modules/rootState';
 import LevelBox from 'assets/images/bg-levelbox.png';
+import { numberWithComma } from 'utils';
 
 export default function Profile() {
   const { isFetching } = useSelector((state: RootState) => state.summoner);
   const { name, level, ladderRank, profileImageUrl, profileBorderImageUrl } = useSelector(
     (state: RootState) => state.summoner.result
   );
-
-  const numberWithComma = (rank: number) => {
-    return new Intl.NumberFormat('ko-KR').format(rank);
-  };
 
   if (isFetching) {
     return <Container>Loading...</Container>;
