@@ -21,4 +21,5 @@ const Container = styled.div`
   width: 1000px;
   margin: 0 auto;
   padding: 15px 0;
+  padding-left: 35px;
 `;

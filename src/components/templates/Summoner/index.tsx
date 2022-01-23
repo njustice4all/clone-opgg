@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import Header from 'components/organisms/Header';
 import TierTagRow from 'components/organisms/TierTagRow';
+import Profile from 'components/organisms/Profile';
 
 export default function SummonerTemplate() {
   const { userName } = useParams();
@@ -12,7 +13,7 @@ export default function SummonerTemplate() {
     <Container>
       <Header />
       <TierTagRow />
-      <h1>this is it - {userName}</h1>
+      <Profile />
     </Container>
   );
 }
