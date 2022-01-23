@@ -8,6 +8,7 @@ import Profile from 'components/organisms/Profile';
 import SoloRank from 'components/organisms/Widget/SoloRank';
 import BodyLayout from 'components/organisms/BodyLayout';
 import FreeRank from 'components/organisms/Widget/FreeRank';
+import MostInfo from 'components/organisms/Widget/MostInfo';
 
 export default function SummonerTemplate() {
   const { userName } = useParams();
@@ -21,6 +22,7 @@ export default function SummonerTemplate() {
         <Left>
           <SoloRank />
           <FreeRank />
+          <MostInfo />
         </Left>
         <Right>
           <div>list</div>

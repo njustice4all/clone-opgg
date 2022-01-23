@@ -3,7 +3,7 @@ type Champion = {
   level: number;
 };
 
-type ChampionWinRate = {
+export type ChampionWinRate = {
   id: number;
   imageUrl: string;
   key: string;
@@ -116,7 +116,7 @@ type Position = {
   wins: number;
 };
 
-type MostChampion = {
+export type MostChampion = {
   assists: number;
   cs: number;
   deaths: number;
