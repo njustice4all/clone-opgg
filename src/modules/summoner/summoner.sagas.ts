@@ -12,8 +12,26 @@ import {
   CANCEL_GET_SUMMONER_SUGGEST,
   CLICK_SUMMONER,
   GET_SUMMONER_SUGGEST_REQUEST,
+  GET_SUMMONER_REQUEST,
 } from './summoner.actions';
 import { ResponseSummoner } from './summoner.models';
+
+function* workerGetSummoner(action: ReturnType<typeof actionGetSummoner.request>) {
+  try {
+    const { userName } = action.payload;
+    const response: AxiosResponse<ResponseSummoner> = yield Http.instance.get(
+      `/summoner/${userName}`
+    );
+
+    if (response.status === 200) {
+      yield put(actionGetSummoner.success(response.data));
+    } else {
+      yield put(actionGetSummoner.failure());
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 function* workerGetSummonerSuggest(action: ReturnType<typeof actionGetSummonerSuggest.request>) {
   if (action.payload.userName === '') return;
@@ -59,8 +77,8 @@ function* workerClickSummoner(action: ReturnType<typeof actionClickSummoner>) {
   }
 }
 
-function* watchClickSummoner() {
-  yield takeLatest(CLICK_SUMMONER, workerClickSummoner);
+function* watchGetSUmmoner() {
+  yield takeLatest(GET_SUMMONER_REQUEST, workerGetSummoner);
 }
 
 function* watchGetSummonerSuggest() {
@@ -71,6 +89,10 @@ function* watchGetSummonerSuggest() {
   }
 }
 
+function* watchClickSummoner() {
+  yield takeLatest(CLICK_SUMMONER, workerClickSummoner);
+}
+
 export default function* summonerSaga() {
-  yield all([fork(watchGetSummonerSuggest), fork(watchClickSummoner)]);
+  yield all([fork(watchGetSUmmoner), fork(watchGetSummonerSuggest), fork(watchClickSummoner)]);
 }

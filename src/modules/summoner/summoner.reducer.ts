@@ -10,6 +10,7 @@ import {
   GET_SUMMONER_SUGGEST_SUCCESS,
   GET_SUMMONER_SUGGEST_FAILURE,
   CLICK_SUMMONER,
+  COPY_SUMMONER,
 } from './summoner.actions';
 
 const summonerState = {
@@ -34,13 +35,13 @@ const initialState = {
 };
 
 const summonerReducer = createReducer<ISummonerState, RootAction>(initialState, {
-  [GET_SUMMONER_REQUEST]: () => ({ ...initialState, isFetching: true }),
+  [GET_SUMMONER_REQUEST]: (state) => ({ ...state, isFetching: true }),
   [GET_SUMMONER_SUCCESS]: (state, action) => {
     return { ...state, result: action.payload.summoner, isFetching: false };
   },
   [GET_SUMMONER_FAILURE]: () => ({ ...initialState, isFetching: false }),
 
-  [GET_SUMMONER_SUGGEST_REQUEST]: () => ({ ...initialState, isFetching: true }),
+  [GET_SUMMONER_SUGGEST_REQUEST]: (state) => ({ ...state, isFetching: true }),
   [GET_SUMMONER_SUGGEST_SUCCESS]: (state, action) => {
     return { ...state, resAutoComplete: action.payload.summoner, isFetching: false };
   },
@@ -50,6 +51,12 @@ const summonerReducer = createReducer<ISummonerState, RootAction>(initialState, 
     ...state,
     isFetching: false,
     result: state.resAutoComplete,
+  }),
+
+  [COPY_SUMMONER]: (state) => ({
+    ...state,
+    result: state.resAutoComplete,
+    resAutoComplete: initialState.resAutoComplete,
   }),
 });
 

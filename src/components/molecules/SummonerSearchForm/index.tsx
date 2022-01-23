@@ -1,21 +1,33 @@
+import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import React, { MouseEvent, KeyboardEvent, useState, useRef } from 'react';
+import React, { MouseEvent, KeyboardEvent, useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 import SearchLogo from '../../../assets/images/00-icon-gg.svg';
 import SearchFormDropDown from '../SearchFormDropDown';
 import { addCookie } from 'utils/cookieHelper';
 import { _HIST } from 'utils/constants';
-import { actionClickSummoner, actionGetSummonerSuggest } from 'modules/summoner/summoner.actions';
+import {
+  actionClickSummoner,
+  actionGetSummoner,
+  actionGetSummonerSuggest,
+} from 'modules/summoner/summoner.actions';
 import SummonerAutoComplete from '../SearchFormDropDown/SummonerAutoComplete';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 
 export default function SummonerSearchForm() {
   const ref = useRef(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const params = useParams<{ userName: string }>();
   const [userName, setUserName] = useState('');
   const [visibleDropDown, setVisibleDropDown] = useState({ recent: false, auto: false });
   useOnClickOutside(ref, () => setVisibleDropDown({ recent: false, auto: false }));
+
+  useEffect(() => {
+    dispatch(actionGetSummoner.request({ userName: params.userName || '' }));
+  }, [params, dispatch]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVisibleDropDown((dropDown) => ({ ...dropDown, auto: true }));
@@ -44,6 +56,7 @@ export default function SummonerSearchForm() {
     setUserName('');
     setVisibleDropDown({ recent: false, auto: false });
     dispatch(actionClickSummoner(userName));
+    navigate(`/summoner/${userName}`);
   };
 
   const isShowAutoComplete = visibleDropDown.auto && userName !== '';
