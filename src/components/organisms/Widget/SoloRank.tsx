@@ -43,7 +43,6 @@ export default function SoloRank() {
 }
 
 const Container = styled.div`
-  width: 300px;
   height: 124px;
   padding: 10px 8px;
   border-radius: 2px;

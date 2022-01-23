@@ -6,6 +6,8 @@ import Header from 'components/organisms/Header';
 import TierTagRow from 'components/organisms/TierTagRow';
 import Profile from 'components/organisms/Profile';
 import SoloRank from 'components/organisms/Widget/SoloRank';
+import BodyLayout from 'components/organisms/BodyLayout';
+import FreeRank from 'components/organisms/Widget/FreeRank';
 
 export default function SummonerTemplate() {
   const { userName } = useParams();
@@ -15,9 +17,15 @@ export default function SummonerTemplate() {
       <Header />
       <TierTagRow />
       <Profile />
-      <Content>
-        <SoloRank />
-      </Content>
+      <BodyLayout>
+        <Left>
+          <SoloRank />
+          <FreeRank />
+        </Left>
+        <Right>
+          <div>list</div>
+        </Right>
+      </BodyLayout>
     </Container>
   );
 }
@@ -27,8 +35,10 @@ const Container = styled.div`
   padding-bottom: 100px;
 `;
 
-const Content = styled.div`
-  width: 1000px;
-  margin: 0 auto;
-  padding-top: 20px;
+const Left = styled.div`
+  width: 300px;
+`;
+
+const Right = styled.div`
+  margin-left: 10px;
 `;
