@@ -3,16 +3,11 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
 import { RootState } from 'modules/rootState';
-import { TAB } from 'components/organisms/Widget/SummaryGames';
 import Empty from 'assets/images/group.svg';
 import { calWinRate } from 'utils';
 import SummaryKDA from 'components/atoms/RateKDA/SummaryKDA';
 
-interface IMostChampion {
-  tab: TAB;
-}
-
-export default function MostChampion({ tab }: IMostChampion) {
+export default function MostChampion() {
   const { champions } = useSelector((state: RootState) => state.matches);
   let withEmptyChampions: any = [...champions];
   if (champions.length < 3) {
@@ -21,8 +16,6 @@ export default function MostChampion({ tab }: IMostChampion) {
       withEmptyChampions.push('empty');
     }
   }
-
-  console.log(champions);
 
   return (
     <Container>

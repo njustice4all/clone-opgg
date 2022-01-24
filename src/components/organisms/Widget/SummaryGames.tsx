@@ -32,8 +32,8 @@ export default function SummaryGames() {
       ) : (
         <BodyWrapper>
           <Donut tab={tab} />
-          <MostChampion tab={tab} />
-          <MostPosition tab={tab} />
+          <MostChampion />
+          <MostPosition />
         </BodyWrapper>
       )}
     </Container>
