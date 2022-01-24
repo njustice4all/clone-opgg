@@ -1,7 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function MostChampion() {
+import { TAB } from 'components/organisms/Widget/SummaryGames';
+
+interface IMostChampion {
+  tab: TAB;
+}
+
+export default function MostChampion({ tab }: IMostChampion) {
   return (
     <Container>
       <div>MostChampion</div>

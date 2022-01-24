@@ -9,7 +9,7 @@ export const actionGetMatches = createAsyncAction(
   GET_MATCHES_REQUEST,
   GET_MATCHES_SUCCESS,
   GET_MATCHES_FAILURE
-)<RequestMatches, ResponseMatches>();
+)<RequestMatches, ResponseMatches, undefined>();
 
 const actions = { actionGetMatches };
 

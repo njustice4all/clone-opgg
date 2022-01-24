@@ -5,3 +5,7 @@ export type RequestMatches = {
 };
 
 export type ResponseMatches = MatchesDTO;
+
+export interface IMatchesState extends MatchesDTO {
+  isFetching: boolean;
+}

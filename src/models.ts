@@ -42,7 +42,7 @@ type Ward = {
   visionWardsBought: number;
 };
 
-type GameInfo = {
+export type GameInfo = {
   champion: Champion;
   createDate: number;
   gameId: string;

@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { takeLatest, all, fork, put, select, take, cancel } from 'redux-saga/effects';
+import { takeLatest, all, fork, put } from 'redux-saga/effects';
 
 import Http from '@http';
 import { actionGetMostInfo, GET_MOST_INFO_REQUEST } from './mostInfo.actions';

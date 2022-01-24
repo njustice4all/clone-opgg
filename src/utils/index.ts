@@ -3,6 +3,7 @@ export const numberWithComma = (count: number) => {
 };
 
 export const calWinRate = (win: number, lose: number) => {
+  if (win + lose === 0) return 0;
   return Math.floor((win * 100) / (win + lose));
 };
 
@@ -24,4 +25,17 @@ export const calKDA = (kill: number, death: number, assist: number) => {
     str: `${kda.toFixed(2)}:1`,
     color,
   };
+};
+
+export const calScore = (score: number) => {
+  let color = '#5e5e5e';
+  if (score >= 3 && score < 4) {
+    color = '#2daf7f';
+  } else if (score >= 4 && score < 5) {
+    color = '#1f8ecd';
+  } else if (score >= 5) {
+    color = '#e19205';
+  }
+
+  return color;
 };
