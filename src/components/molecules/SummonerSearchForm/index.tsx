@@ -26,7 +26,10 @@ export default function SummonerSearchForm() {
   useOnClickOutside(ref, () => setVisibleDropDown({ recent: false, auto: false }));
 
   useEffect(() => {
-    dispatch(actionGetSummoner.request({ userName: params.userName || '' }));
+    if (params.userName) {
+      addCookie(_HIST, params.userName);
+      dispatch(actionGetSummoner.request({ userName: params.userName }));
+    }
   }, [params, dispatch]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'modules/rootState';
 import { TAB } from 'components/organisms/Widget/SummaryGames';
 import Empty from 'assets/images/group.svg';
-import { calKDA, calWinRate } from 'utils';
+import { calWinRate } from 'utils';
 import SummaryKDA from 'components/atoms/RateKDA/SummaryKDA';
 
 interface IMostChampion {
