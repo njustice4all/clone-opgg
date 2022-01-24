@@ -9,6 +9,7 @@ import SoloRank from 'components/organisms/Widget/SoloRank';
 import BodyLayout from 'components/organisms/BodyLayout';
 import FreeRank from 'components/organisms/Widget/FreeRank';
 import MostInfo from 'components/organisms/Widget/MostInfo';
+import SummaryGames from 'components/organisms/Widget/SummaryGames';
 
 export default function SummonerTemplate() {
   const { userName } = useParams();
@@ -25,7 +26,7 @@ export default function SummonerTemplate() {
           <MostInfo />
         </Left>
         <Right>
-          <div>list</div>
+          <SummaryGames />
         </Right>
       </BodyLayout>
     </Container>
@@ -43,4 +44,5 @@ const Left = styled.div`
 
 const Right = styled.div`
   margin-left: 10px;
+  width: 690px;
 `;
