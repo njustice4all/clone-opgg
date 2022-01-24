@@ -46,4 +46,5 @@ const Container = styled.div`
 
 const BodyWrapper = styled.div`
   display: flex;
+  background-color: #ededed;
 `;

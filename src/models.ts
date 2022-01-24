@@ -1,6 +1,14 @@
-type Champion = {
+export type Champion = {
+  assists: number;
+  deaths: number;
+  games: number;
+  id: number;
   imageUrl: string;
-  level: number;
+  key: string;
+  kills: number;
+  losses: number;
+  name: string;
+  wins: number;
 };
 
 export type ChampionWinRate = {

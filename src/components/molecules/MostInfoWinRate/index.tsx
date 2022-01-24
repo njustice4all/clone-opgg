@@ -10,6 +10,7 @@ interface IMostInfoWinRate {
 }
 
 export default function MostInfoWinRate({ champion }: IMostInfoWinRate) {
+  const { games, kills, deaths, assists } = champion;
   const winRate = calWinRate(champion.wins, champion.losses);
 
   return (
@@ -22,9 +23,10 @@ export default function MostInfoWinRate({ champion }: IMostInfoWinRate) {
         <CS>CS {champion.cs} (2.4)</CS>
       </Second>
       <Third>
-        <RateKDA kill={champion.kills} death={champion.deaths} assist={champion.assists} />
+        <RateKDA kill={kills} death={deaths} assist={assists} />
         <KDA>
-          {champion.kills} / {champion.deaths} / {champion.assists}
+          {(kills / games).toFixed(1)} / {(deaths / games).toFixed(1)} /{' '}
+          {(assists / games).toFixed(1)}
         </KDA>
       </Third>
       <Fourth>
