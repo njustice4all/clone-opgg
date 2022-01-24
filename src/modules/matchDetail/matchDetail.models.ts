@@ -6,3 +6,5 @@ export type RequestMatchDetail = {
 };
 
 export type ResponseMatchDetail = MatchDetailDTO;
+
+// TODO: { ...게임아이디: 디테일 }

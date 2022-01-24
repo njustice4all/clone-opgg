@@ -1,21 +1,29 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-interface ISummaryHeader {
-  tab: 'all' | 'solo' | 'free';
-  onClickTab: React.Dispatch<React.SetStateAction<'all' | 'solo' | 'free'>>;
-}
+import { RootState } from 'modules/rootState';
+import { actionUpdateUI } from 'modules/ui/ui.actions';
 
-export default function SummaryHeader({ tab, onClickTab }: ISummaryHeader) {
+export default function SummaryHeader() {
+  const dispatch = useDispatch();
+  const { currentTab } = useSelector((state: RootState) => state.ui);
+
+  const onClickTab = (value) => () => {
+    if (currentTab !== value) {
+      dispatch(actionUpdateUI({ key: 'currentTab', value }));
+    }
+  };
+
   return (
     <Container>
-      <Tab active={tab === 'all'} onClick={() => onClickTab('all')}>
+      <Tab active={currentTab === 'all'} onClick={onClickTab('all')}>
         전체
       </Tab>
-      <Tab active={tab === 'solo'} onClick={() => onClickTab('solo')}>
+      <Tab active={currentTab === 'solo'} onClick={onClickTab('solo')}>
         솔로게임
       </Tab>
-      <Tab active={tab === 'free'} onClick={() => onClickTab('free')}>
+      <Tab active={currentTab === 'free'} onClick={onClickTab('free')}>
         자유랭크
       </Tab>
     </Container>

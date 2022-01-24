@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
@@ -10,12 +10,9 @@ import MostChampion from 'components/molecules/SummaryBody/MostChampion';
 import MostPosition from 'components/molecules/SummaryBody/MostPosition';
 import SummaryHeader from 'components/molecules/SummaryHeader';
 
-export type TAB = 'all' | 'solo' | 'free';
-
 export default function SummaryGames() {
   const dispatch = useDispatch();
   const params = useParams<{ userName: string }>();
-  const [tab, setTab] = useState<TAB>('all');
   const { isFetching } = useSelector((state: RootState) => state.matches);
 
   useEffect(() => {
@@ -26,12 +23,12 @@ export default function SummaryGames() {
 
   return (
     <Container>
-      <SummaryHeader tab={tab} onClickTab={setTab} />
+      <SummaryHeader />
       {isFetching ? (
         <div>Loading</div>
       ) : (
         <BodyWrapper>
-          <Donut tab={tab} />
+          <Donut />
           <MostChampion />
           <MostPosition />
         </BodyWrapper>

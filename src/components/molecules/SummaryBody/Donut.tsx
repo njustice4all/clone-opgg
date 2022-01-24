@@ -1,26 +1,17 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
 
-import { RootState } from 'modules/rootState';
-import { TAB } from 'components/organisms/Widget/SummaryGames';
-import { filterdGames } from 'utils/filterdGames';
 import { calScore, calWinRate } from 'utils';
+import useFilteredGames from 'hooks/useFilteredGames';
 
-interface IDonut {
-  tab: TAB;
-}
+export default function Donut() {
+  const games = useFilteredGames();
 
-export default function Donut({ tab }: IDonut) {
-  const { games } = useSelector((state: RootState) => state.matches);
-
-  const visibleGames = useCallback(() => filterdGames(games, tab), [games, tab]);
-
-  const totalGames = visibleGames().length;
-  const win = visibleGames().filter((game) => game.isWin).length;
+  const totalGames = games.length;
+  const win = games.filter((game) => game.isWin).length;
   const lose = totalGames - win;
 
-  const totalKDA = visibleGames().reduce<{ k: number; d: number; a: number; str: number }>(
+  const totalKDA = games.reduce<{ k: number; d: number; a: number; str: number }>(
     (acc, game) => {
       acc['k'] = acc['k'] + game.stats.general.kill;
       acc['d'] = acc['d'] + game.stats.general.death;

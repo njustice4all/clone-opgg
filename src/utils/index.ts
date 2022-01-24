@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 export const numberWithComma = (count: number) => {
   return new Intl.NumberFormat('ko-KR').format(count);
 };
@@ -38,4 +40,25 @@ export const calScore = (score: number) => {
   }
 
   return color;
+};
+
+const MINUTE = 60;
+const HOUR = MINUTE * 60;
+const DAY = HOUR * 24;
+export const calDisplayDate = (createdAt: number) => {
+  const now = dayjs();
+  const seconds = Math.round(Math.abs(now.diff(dayjs(createdAt))) / 1000);
+
+  const [value, unit] =
+    seconds < HOUR
+      ? [Math.round(seconds / MINUTE), '분 전']
+      : seconds < DAY
+      ? [Math.round(seconds / HOUR), '시간 전']
+      : [Math.round(seconds / DAY), '일 전'];
+
+  if (value === 1 && unit === '시간 전') {
+    return '한시간 전';
+  }
+
+  return unit === '방금' ? '방금' : `${value}${unit}`;
 };
