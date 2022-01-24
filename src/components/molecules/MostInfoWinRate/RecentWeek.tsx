@@ -18,8 +18,8 @@ export default function RecentWeek({ winRate }: IRecentWeek) {
       <Name>{winRate.name}</Name>
       <Rate>{calWinRate(winRate.wins, winRate.losses)}%</Rate>
       <Bar>
-        <Win width={widthWin}>{wins}승</Win>
-        <Lose width={100 - widthWin}>{losses}패</Lose>
+        {wins !== 0 && <Win width={widthWin}>{wins}승</Win>}
+        {losses !== 0 && <Lose width={100 - widthWin}>{losses}패</Lose>}
       </Bar>
     </Container>
   );
