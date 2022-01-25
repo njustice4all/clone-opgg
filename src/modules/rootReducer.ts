@@ -7,6 +7,7 @@ import summonerReducer from './summoner/summoner.reducer';
 import mostInfoReducer from './mostInfo/mostInfo.reducer';
 import matchesReducer from './matches/matches.reducer';
 import uiReducer from './ui/ui.reducer';
+import itemReducer from './item/item.reducer';
 
 const createRootReducer = (history: History) =>
   combineReducers<RootState>({
@@ -15,6 +16,7 @@ const createRootReducer = (history: History) =>
     mostInfo: mostInfoReducer,
     matches: matchesReducer,
     ui: uiReducer,
+    item: itemReducer,
   });
 
 export default createRootReducer;
