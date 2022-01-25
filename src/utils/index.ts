@@ -62,3 +62,19 @@ export const calDisplayDate = (createdAt: number) => {
 
   return unit === '방금' ? '방금' : `${value}${unit}`;
 };
+
+export const getItemArray = (items: { imageUrl: string }[]) => {
+  const newItems: any = [...items];
+  newItems.splice(items.length - 1, 1);
+
+  for (let i = 0; i < 6; i++) {
+    if (!newItems[i]) {
+      newItems.push('empty' as any);
+    }
+  }
+
+  return {
+    newItems,
+    wards: items[items.length - 1],
+  };
+};

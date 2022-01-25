@@ -6,6 +6,7 @@ import MatchStats from 'components/atoms/Matches/MatchStats';
 import MatchSpell from 'components/atoms/Matches/MatchSpell';
 import MatchResult from 'components/atoms/Matches/MatchResult';
 import MatchSummonerInfo from 'components/atoms/Matches/MatchSummonerInfo';
+import MatchItems from 'components/atoms/Matches/MatchItems';
 
 interface ICardMatch extends GameInfo {}
 
@@ -30,6 +31,7 @@ export default function CardMatch(game: ICardMatch) {
           largestMultiKillString={largestMultiKillString}
         />
         <MatchSummonerInfo level={game.champion.level || 0} general={game.stats.general} />
+        <MatchItems isWin={game.isWin} items={game.items} ward={game.stats.ward} />
       </ContentWrap>
       <Players>인예지어린이</Players>
       <Expand>뿅</Expand>
