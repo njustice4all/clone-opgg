@@ -1,17 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import { GameInfo } from 'models';
-import MatchStats from 'components/atoms/Matches/MatchStats';
-import MatchSpell from 'components/atoms/Matches/MatchSpell';
-import MatchResult from 'components/atoms/Matches/MatchResult';
-import MatchSummonerInfo from 'components/atoms/Matches/MatchSummonerInfo';
-import MatchItems from 'components/atoms/Matches/MatchItems';
+import MatchStats from 'components/molecules/Matches/MatchStats';
+import MatchSpell from 'components/molecules/Matches/MatchSpell';
+import MatchResult from 'components/molecules/Matches/MatchResult';
+import MatchSummonerInfo from 'components/molecules/Matches/MatchSummonerInfo';
+import MatchItems from 'components/molecules/Matches/MatchItems';
+import MatchPlayers from '../Matches/MatchPlayers';
+import MatchExpand from '../Matches/MatchExpand';
+import { actionGetMatchDetail } from 'modules/matchDetail/matchDetail.actions';
 
 interface ICardMatch extends GameInfo {}
 
 export default function CardMatch(game: ICardMatch) {
+  const dispatch = useDispatch();
+  const { userName } = useParams<{ userName: string }>();
   const { kill, death, assist, opScoreBadge, largestMultiKillString } = game.stats.general;
+
+  useEffect(() => {
+    const gameId = game.gameId;
+    if (userName) {
+      dispatch(actionGetMatchDetail.request({ userName, gameId }));
+    }
+  }, [game.gameId, userName, dispatch]);
 
   return (
     <Container isWin={game.isWin}>
@@ -33,8 +47,8 @@ export default function CardMatch(game: ICardMatch) {
         <MatchSummonerInfo level={game.champion.level || 0} general={game.stats.general} />
         <MatchItems isWin={game.isWin} items={game.items} ward={game.stats.ward} />
       </ContentWrap>
-      <Players>인예지어린이</Players>
-      <Expand>뿅</Expand>
+      <MatchPlayers gameId={game.gameId} />
+      <MatchExpand isWin={game.isWin} />
     </Container>
   );
 }
@@ -51,12 +65,4 @@ const ContentWrap = styled.div`
   flex: 1;
   display: flex;
   padding: 12px 0;
-`;
-
-const Players = styled.div`
-  width: 170px;
-`;
-
-const Expand = styled.div`
-  width: 30px;
 `;

@@ -5,6 +5,7 @@ import { IMostInfoState } from './mostInfo/mostInfo.models';
 import { ISummonerState } from './summoner/summoner.models';
 import { IUIState } from './ui/ui.models';
 import { IItemState } from './item/item.models';
+import { IMatchDetailState } from './matchDetail/matchDetail.models';
 
 export interface RootState {
   router: RouterState;
@@ -13,4 +14,5 @@ export interface RootState {
   matches: IMatchesState;
   ui: IUIState;
   item: IItemState;
+  matchDetail: IMatchDetailState;
 }

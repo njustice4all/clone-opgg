@@ -1,10 +1,15 @@
-import { MatchDetailDTO } from 'models';
+import { MatchDetailDTO, Team } from 'models';
 
 export type RequestMatchDetail = {
   userName: string;
-  gameId: number;
+  gameId: string;
 };
 
 export type ResponseMatchDetail = MatchDetailDTO;
 
-// TODO: { ...게임아이디: 디테일 }
+export interface IMatchDetailState {
+  [k: string]: {
+    gameId: string;
+    teams: Team[];
+  };
+}

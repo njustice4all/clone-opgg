@@ -104,7 +104,7 @@ type League = {
   wins: number;
 };
 
-type Team = {
+export type Team = {
   players: FellowPlayer[];
   teamId: number;
 };

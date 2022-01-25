@@ -1,4 +1,5 @@
 import { ItemActions } from './item/item.actions';
+import { MatchDetailActions } from './matchDetail/matchDetail.actions';
 import { MatchesActions } from './matches/matches.actions';
 import { MostInfoActions } from './mostInfo/mostInfo.actions';
 import { SummonerActions } from './summoner/summoner.actions';
@@ -9,4 +10,5 @@ export type RootAction =
   | MostInfoActions
   | MatchesActions
   | UIActions
-  | ItemActions;
+  | ItemActions
+  | MatchDetailActions;

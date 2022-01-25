@@ -22,6 +22,10 @@ export default function Donut() {
     { k: 0, d: 0, a: 0, str: 0 }
   );
 
+  const { k, d, a } = totalKDA;
+  const isLoading = k === 0 && d === 0 && a === 0;
+  // FIXME: loading spinner
+
   return (
     <Container>
       <SummaryRow>

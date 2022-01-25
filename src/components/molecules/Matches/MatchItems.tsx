@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
@@ -6,10 +7,9 @@ import WardRed from 'assets/images/icon-ward-red.svg';
 import IconBuildBlue from 'assets/images/icon-buildblue-p.png';
 import IconBuildRed from 'assets/images/icon-buildred-p.png';
 import { getItemArray } from 'utils';
-import { useSelector } from 'react-redux';
 import { RootState } from 'modules/rootState';
-import Portal from '../Portal';
-import Tooltip from '../Tooltip';
+import Portal from '../../atoms/Portal';
+import Tooltip from '../../atoms/Tooltip';
 
 interface IMatchItems {
   isWin: boolean;

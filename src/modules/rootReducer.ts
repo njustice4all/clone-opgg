@@ -8,6 +8,7 @@ import mostInfoReducer from './mostInfo/mostInfo.reducer';
 import matchesReducer from './matches/matches.reducer';
 import uiReducer from './ui/ui.reducer';
 import itemReducer from './item/item.reducer';
+import matchDetailReducer from './matchDetail/matchDetail.reducer';
 
 const createRootReducer = (history: History) =>
   combineReducers<RootState>({
@@ -17,6 +18,7 @@ const createRootReducer = (history: History) =>
     matches: matchesReducer,
     ui: uiReducer,
     item: itemReducer,
+    matchDetail: matchDetailReducer,
   });
 
 export default createRootReducer;
