@@ -35,3 +35,10 @@ export const POSITION = {
     src: IconTOP,
   },
 };
+
+export const KILL_STRING = {
+  'Double Kill': '더블킬',
+  'Tripple Kill': '트리플킬',
+  'Quadra Kill': '쿼드라킬',
+  'Penta Kill': '펜타킬',
+};
