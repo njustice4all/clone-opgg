@@ -9,6 +9,7 @@ export type Champion = {
   losses: number;
   name: string;
   wins: number;
+  level?: number;
 };
 
 export type ChampionWinRate = {
@@ -31,7 +32,7 @@ type MapInfo = {
   mapId: number;
 };
 
-type General = {
+export type General = {
   assist: number;
   contributionForKillRate: string;
   cs: number;
