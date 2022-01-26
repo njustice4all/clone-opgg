@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import React, { MouseEvent, KeyboardEvent, useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +15,7 @@ import {
 } from 'modules/summoner/summoner.actions';
 import SummonerAutoComplete from '../SearchFormDropDown/SummonerAutoComplete';
 import useOnClickOutside from 'hooks/useOnClickOutside';
+import { RootState } from 'modules/rootState';
 
 export default function SummonerSearchForm() {
   const ref = useRef(null);
@@ -24,18 +25,23 @@ export default function SummonerSearchForm() {
   const [userName, setUserName] = useState('');
   const [visibleDropDown, setVisibleDropDown] = useState({ recent: false, auto: false });
   useOnClickOutside(ref, () => setVisibleDropDown({ recent: false, auto: false }));
+  const { isPersist } = useSelector((state: RootState) => state.summoner);
 
   useEffect(() => {
     if (params.userName) {
       addCookie(_HIST, params.userName);
-      dispatch(actionGetSummoner.request({ userName: params.userName }));
+      if (!isPersist) {
+        dispatch(actionGetSummoner.request({ userName: params.userName }));
+      }
     }
-  }, [params, dispatch]);
+  }, [params, isPersist, dispatch]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVisibleDropDown((dropDown) => ({ ...dropDown, auto: true }));
     setUserName(e.target.value);
-    dispatch(actionGetSummonerSuggest.request({ userName: e.target.value }));
+    if (e.target.value.trim() !== '') {
+      dispatch(actionGetSummonerSuggest.request({ userName: e.target.value }));
+    }
   };
 
   const onKeyUp = (e: KeyboardEvent) => {
@@ -49,23 +55,23 @@ export default function SummonerSearchForm() {
   };
 
   const onClickButtonSummit = (e: MouseEvent) => {
-    if (userName !== '') {
+    if (userName.trim() !== '') {
       submit();
     }
   };
 
   const submit = () => {
-    console.log('now');
-
-    // addCookie(_HIST, userName);
-    // setUserName('');
-    // setVisibleDropDown({ recent: false, auto: false });
-    // dispatch(actionClickSummoner(userName));
-    // navigate(`/summoner/${userName}`);
+    if (userName.trim() !== '') {
+      addCookie(_HIST, userName);
+      setUserName('');
+      setVisibleDropDown({ recent: false, auto: false });
+      dispatch(actionClickSummoner(userName));
+      navigate(`/summoner/${userName}`);
+    }
   };
 
-  const isShowAutoComplete = visibleDropDown.auto && userName !== '';
-  const isShowDropDown = visibleDropDown.recent && userName === '';
+  const isShowAutoComplete = visibleDropDown.auto && userName.trim() !== '';
+  const isShowDropDown = visibleDropDown.recent && userName.trim() === '';
 
   return (
     <Form ref={ref}>

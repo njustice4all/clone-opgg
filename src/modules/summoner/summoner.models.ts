@@ -17,4 +17,5 @@ interface Result extends Summoner {
 export interface ISummonerState {
   resAutoComplete: AutoComplete;
   result: Result;
+  isPersist: boolean;
 }

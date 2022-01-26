@@ -31,10 +31,15 @@ const summonerState = {
 const initialState = {
   resAutoComplete: { isFetching: false, ...summonerState },
   result: { isFetching: false, ...summonerState },
+  isPersist: false,
 };
 
 const summonerReducer = createReducer<ISummonerState, RootAction>(initialState, {
-  [GET_SUMMONER_REQUEST]: (state) => ({ ...state, result: { ...state.result, isFetching: true } }),
+  [GET_SUMMONER_REQUEST]: (state) => ({
+    ...state,
+    isPersist: false,
+    result: { ...state.result, isFetching: true },
+  }),
   [GET_SUMMONER_SUCCESS]: (state, action) => {
     return { ...state, result: { ...action.payload.summoner, isFetching: false } };
   },
@@ -57,6 +62,7 @@ const summonerReducer = createReducer<ISummonerState, RootAction>(initialState, 
   [COPY_SUMMONER]: (state) => ({
     result: { ...state.resAutoComplete, isFetching: false },
     resAutoComplete: initialState.resAutoComplete,
+    isPersist: true,
   }),
 });
 
