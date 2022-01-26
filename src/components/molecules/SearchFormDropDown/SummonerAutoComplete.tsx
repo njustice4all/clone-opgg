@@ -10,7 +10,8 @@ interface ISummonerAutoComplete {
 }
 
 export default function SummonerAutoComplete({ userName, submit }: ISummonerAutoComplete) {
-  const { isFetching, resAutoComplete } = useSelector((state: RootState) => state.summoner);
+  const { resAutoComplete } = useSelector((state: RootState) => state.summoner);
+  const { isFetching } = resAutoComplete;
 
   const onClickSummoner = () => {
     if (!isFetching) {
@@ -30,7 +31,7 @@ export default function SummonerAutoComplete({ userName, submit }: ISummonerAuto
           <div>
             <Name>{userName}</Name>
             {isFetching ? (
-              <Stats>loading</Stats>
+              <Stats>Loading...</Stats>
             ) : (
               <Stats>
                 {resAutoComplete.leagues[0]?.tierRank.tier}{' '}

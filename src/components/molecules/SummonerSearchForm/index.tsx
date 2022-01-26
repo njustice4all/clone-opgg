@@ -55,11 +55,13 @@ export default function SummonerSearchForm() {
   };
 
   const submit = () => {
-    addCookie(_HIST, userName);
-    setUserName('');
-    setVisibleDropDown({ recent: false, auto: false });
-    dispatch(actionClickSummoner(userName));
-    navigate(`/summoner/${userName}`);
+    console.log('now');
+
+    // addCookie(_HIST, userName);
+    // setUserName('');
+    // setVisibleDropDown({ recent: false, auto: false });
+    // dispatch(actionClickSummoner(userName));
+    // navigate(`/summoner/${userName}`);
   };
 
   const isShowAutoComplete = visibleDropDown.auto && userName !== '';

@@ -29,33 +29,33 @@ const summonerState = {
 };
 
 const initialState = {
-  isFetching: false,
-  resAutoComplete: summonerState,
-  result: summonerState,
+  resAutoComplete: { isFetching: false, ...summonerState },
+  result: { isFetching: false, ...summonerState },
 };
 
 const summonerReducer = createReducer<ISummonerState, RootAction>(initialState, {
-  [GET_SUMMONER_REQUEST]: (state) => ({ ...state, isFetching: true }),
+  [GET_SUMMONER_REQUEST]: (state) => ({ ...state, result: { ...state.result, isFetching: true } }),
   [GET_SUMMONER_SUCCESS]: (state, action) => {
-    return { ...state, result: action.payload.summoner, isFetching: false };
+    return { ...state, result: { ...action.payload.summoner, isFetching: false } };
   },
-  [GET_SUMMONER_FAILURE]: () => ({ ...initialState, isFetching: false }),
+  [GET_SUMMONER_FAILURE]: () => initialState,
 
-  [GET_SUMMONER_SUGGEST_REQUEST]: (state) => ({ ...state, isFetching: true }),
+  [GET_SUMMONER_SUGGEST_REQUEST]: (state) => ({
+    ...state,
+    resAutoComplete: { ...state.resAutoComplete, isFetching: true },
+  }),
   [GET_SUMMONER_SUGGEST_SUCCESS]: (state, action) => {
-    return { ...state, resAutoComplete: action.payload.summoner, isFetching: false };
+    return { ...state, resAutoComplete: { ...action.payload.summoner, isFetching: false } };
   },
-  [GET_SUMMONER_SUGGEST_FAILURE]: () => ({ ...initialState, isFetching: false }),
+  [GET_SUMMONER_SUGGEST_FAILURE]: () => initialState,
 
   [CLICK_SUMMONER]: (state) => ({
     ...state,
-    isFetching: false,
-    result: state.resAutoComplete,
+    result: { ...state.resAutoComplete, isFetching: false },
   }),
 
   [COPY_SUMMONER]: (state) => ({
-    ...state,
-    result: state.resAutoComplete,
+    result: { ...state.resAutoComplete, isFetching: false },
     resAutoComplete: initialState.resAutoComplete,
   }),
 });

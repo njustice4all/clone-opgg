@@ -6,11 +6,11 @@ import { RootState } from 'modules/rootState';
 import { calWinRate, numberWithComma } from 'utils';
 
 export default function SoloRank() {
-  const { isFetching, result } = useSelector((state: RootState) => state.summoner);
+  const { result } = useSelector((state: RootState) => state.summoner);
 
   const solo = result.leagues[0];
 
-  if (isFetching || !solo) {
+  if (result.isFetching || !solo) {
     return <Container>Loading</Container>;
   }
 

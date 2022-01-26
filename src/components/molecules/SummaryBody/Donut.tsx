@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { calScore, calWinRate } from 'utils';
 import useFilteredGames from 'hooks/useFilteredGames';
+import ProgressDonut from 'components/atoms/ProgressDonut';
 
 export default function Donut() {
   const games = useFilteredGames();
@@ -33,7 +34,7 @@ export default function Donut() {
       </SummaryRow>
       <Wrap>
         <DonutWrapper>
-          <Image />
+          <ProgressDonut win={win} lose={lose} />
         </DonutWrapper>
         <Box>
           <KDAWrap>
@@ -74,12 +75,6 @@ const Wrap = styled.div`
 const DonutWrapper = styled.div`
   padding-left: 24px;
   margin-right: 35px;
-`;
-
-const Image = styled.div`
-  width: 90px;
-  height: 90px;
-  background-color: blue;
 `;
 
 const Box = styled.div`

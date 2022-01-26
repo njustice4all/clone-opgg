@@ -6,8 +6,15 @@ export type RequestSummoner = {
 
 export type ResponseSummoner = SummonerDTO;
 
-export interface ISummonerState {
+interface AutoComplete extends Summoner {
   isFetching: boolean;
-  resAutoComplete: Summoner;
-  result: Summoner;
+}
+
+interface Result extends Summoner {
+  isFetching: boolean;
+}
+
+export interface ISummonerState {
+  resAutoComplete: AutoComplete;
+  result: Result;
 }

@@ -37,7 +37,7 @@ export default function MatchItems({ isWin, items, ward }: IMatchItems) {
   const { visionWardsBought } = ward;
   const { newItems, wards } = getItemArray(items);
 
-  const onMouseEnter = (itemUrl: string) => (e) => {
+  const onMouseOver = (itemUrl: string) => (e) => {
     const { x, y, width } = e.target.getBoundingClientRect();
 
     const [itemNo] = itemUrl.split('/')[itemUrl.split('/').length - 1].split('.');
@@ -56,7 +56,7 @@ export default function MatchItems({ isWin, items, ward }: IMatchItems) {
     }
   };
 
-  const onMouseLeave = () => {
+  const onMouseOut = () => {
     setTooltip(initialState);
   };
 
@@ -78,14 +78,18 @@ export default function MatchItems({ isWin, items, ward }: IMatchItems) {
                 key={idx}
                 src={item.imageUrl}
                 alt="아이템"
-                onMouseOver={onMouseEnter(item.imageUrl)}
-                onMouseOut={onMouseLeave}
+                onMouseOver={onMouseOver(item.imageUrl)}
+                onMouseOut={onMouseOut}
               />
             );
           })}
         </IconWrap>
         <SpecialItemWrap>
-          <Icon src={wards.imageUrl} />
+          <Icon
+            src={wards.imageUrl}
+            onMouseOver={onMouseOver(wards.imageUrl)}
+            onMouseOut={onMouseOut}
+          />
           <Icon style={{ marginTop: '2px' }} src={isWin ? IconBuildBlue : IconBuildRed} />
         </SpecialItemWrap>
       </ItemWrap>

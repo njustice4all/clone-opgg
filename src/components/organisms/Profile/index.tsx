@@ -7,7 +7,7 @@ import LevelBox from 'assets/images/bg-levelbox.png';
 import { numberWithComma } from 'utils';
 
 export default function Profile() {
-  const { isFetching } = useSelector((state: RootState) => state.summoner);
+  const { isFetching } = useSelector((state: RootState) => state.summoner.result);
   const { name, level, ladderRank, profileImageUrl, profileBorderImageUrl } = useSelector(
     (state: RootState) => state.summoner.result
   );
