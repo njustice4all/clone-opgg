@@ -25,7 +25,7 @@ export default function SummaryGames() {
     <Container>
       <SummaryHeader />
       {isFetching ? (
-        <div>Loading</div>
+        <LoadingSummary>Loading...</LoadingSummary>
       ) : (
         <BodyWrapper>
           <Donut />
@@ -44,4 +44,11 @@ const Container = styled.div`
 const BodyWrapper = styled.div`
   display: flex;
   background-color: #ededed;
+`;
+
+const LoadingSummary = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 157px;
 `;
