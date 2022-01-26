@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { useInView } from 'react-intersection-observer';
 
 import { GameInfo } from 'models';
 import MatchStats from 'components/molecules/Matches/MatchStats';
@@ -18,17 +19,19 @@ interface ICardMatch extends GameInfo {}
 export default function CardMatch(game: ICardMatch) {
   const dispatch = useDispatch();
   const { userName } = useParams<{ userName: string }>();
+  const { ref, inView } = useInView({ triggerOnce: true });
+
   const { kill, death, assist, opScoreBadge, largestMultiKillString } = game.stats.general;
 
   useEffect(() => {
     const gameId = game.gameId;
-    if (userName) {
+    if (userName && inView) {
       dispatch(actionGetMatchDetail.request({ userName, gameId }));
     }
-  }, [game.gameId, userName, dispatch]);
+  }, [game.gameId, userName, dispatch, inView]);
 
   return (
-    <Container isWin={game.isWin}>
+    <Container isWin={game.isWin} ref={ref}>
       <ContentWrap>
         <MatchStats
           isWin={game.isWin}
