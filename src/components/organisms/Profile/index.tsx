@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'modules/rootState';
 import LevelBox from 'assets/images/bg-levelbox.png';
 import { numberWithComma } from 'utils';
+import LoadingProfile from 'components/atoms/Spiner/LoadingProfile';
 
 export default function Profile() {
   const { isFetching } = useSelector((state: RootState) => state.summoner.result);
@@ -12,24 +13,26 @@ export default function Profile() {
     (state: RootState) => state.summoner.result
   );
 
-  if (isFetching) {
-    return <Container>Loading...</Container>;
-  }
-
   return (
     <Container>
-      <ImageWrapper>
-        <ProfileImage src={profileImageUrl} alt="프로필 이미지" />
-        <BorderImage src={profileBorderImageUrl} alt="프로필 보더 이미지" />
-        <Level>{level}</Level>
-      </ImageWrapper>
-      <ProfileRow>
-        <Name>{name}</Name>
-        <Stats>
-          레더 랭킹 <Position>{numberWithComma(ladderRank.rank)}</Position>위 (상위{' '}
-          {ladderRank.rankPercentOfTop}%)
-        </Stats>
-      </ProfileRow>
+      {isFetching ? (
+        <LoadingProfile />
+      ) : (
+        <>
+          <ImageWrapper>
+            <ProfileImage src={profileImageUrl} alt="프로필 이미지" />
+            <BorderImage src={profileBorderImageUrl} alt="프로필 보더 이미지" />
+            <Level>{level}</Level>
+          </ImageWrapper>
+          <ProfileRow>
+            <Name>{name}</Name>
+            <Stats>
+              레더 랭킹 <Position>{numberWithComma(ladderRank.rank)}</Position>위 (상위{' '}
+              {ladderRank.rankPercentOfTop}%)
+            </Stats>
+          </ProfileRow>
+        </>
+      )}
     </Container>
   );
 }

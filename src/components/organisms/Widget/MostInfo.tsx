@@ -24,7 +24,7 @@ export default function MostInfo() {
   }, [dispatch, params.userName]);
 
   if (isFetching) {
-    return <WidgetMostInfo>Loading</WidgetMostInfo>;
+    return <LoadingMostInfo>Loading...</LoadingMostInfo>;
   }
 
   return (
@@ -70,4 +70,15 @@ const Tab = styled.div<{ active: boolean }>`
   &:last-child {
     border-left: 1px solid #cdd2d2;
   }
+`;
+
+const LoadingMostInfo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  margin-top: 8px;
+  border-radius: 2px;
+  border: solid 1px #cdd2d2;
+  background-color: #ededed;
 `;

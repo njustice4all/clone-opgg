@@ -11,7 +11,7 @@ export default function SoloRank() {
   const solo = result.leagues[0];
 
   if (result.isFetching || !solo) {
-    return <Container>Loading</Container>;
+    return <LoadingSoloRank>Loading...</LoadingSoloRank>;
   }
 
   const tierPosition = solo.tierRank.shortString;
@@ -107,4 +107,14 @@ const WinRate = styled.div`
   color: #879292;
   font-size: 12px;
   margin-top: 4px;
+`;
+
+const LoadingSoloRank = styled.div`
+  height: 124px;
+  border-radius: 2px;
+  border: solid 1px #cdd2d2;
+  background-color: #f2f2f2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
