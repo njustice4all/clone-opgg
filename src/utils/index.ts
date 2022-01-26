@@ -4,6 +4,10 @@ export const numberWithComma = (count: number) => {
   return new Intl.NumberFormat('ko-KR').format(count);
 };
 
+export const toFixed = (target: number, digit: number) => {
+  return isNaN(target) ? '0' : target.toFixed(digit);
+};
+
 export const calWinRate = (win: number, lose: number) => {
   if (win + lose === 0) return 0;
   return Math.floor((win * 100) / (win + lose));
@@ -24,7 +28,7 @@ export const calKDA = (kill: number, death: number, assist: number) => {
   }
 
   return {
-    str: `${kda.toFixed(2)}:1`,
+    str: `${toFixed(kda, 2)}:1`,
     color,
   };
 };

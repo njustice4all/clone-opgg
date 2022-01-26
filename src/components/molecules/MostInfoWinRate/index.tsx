@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { MostChampion } from 'models';
 import RateKDA from 'components/atoms/RateKDA';
-import { calWinRate } from 'utils';
+import { calWinRate, toFixed } from 'utils';
 
 interface IMostInfoWinRate {
   champion: MostChampion;
@@ -25,8 +25,7 @@ export default function MostInfoWinRate({ champion }: IMostInfoWinRate) {
       <Third>
         <RateKDA kill={kills} death={deaths} assist={assists} />
         <KDA>
-          {(kills / games).toFixed(1)} / {(deaths / games).toFixed(1)} /{' '}
-          {(assists / games).toFixed(1)}
+          {toFixed(kills / games, 1)} / {toFixed(deaths / games, 1)} / {toFixed(assists / games, 1)}
         </KDA>
       </Third>
       <Fourth>

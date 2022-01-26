@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { calScore, calWinRate } from 'utils';
+import { calScore, toFixed } from 'utils';
 import useFilteredGames from 'hooks/useFilteredGames';
 import ProgressDonut from 'components/atoms/ProgressDonut';
 
@@ -25,10 +25,7 @@ export default function Donut() {
     { k: 0, d: 0, a: 0, str: 0 }
   );
 
-  const { k, d, a } = totalKDA;
-  const isLoading = k === 0 && d === 0 && a === 0;
   const killContribute = Math.round(contribute / totalGames);
-  // FIXME: loading spinner
 
   return (
     <Container>
@@ -41,15 +38,15 @@ export default function Donut() {
         </DonutWrapper>
         <Box>
           <KDAWrap>
-            {(totalKDA.k / totalGames).toFixed(1)}
+            {toFixed(totalKDA.k / totalGames, 1)}
             <Divide>/</Divide>
-            <span style={{ color: '#c6443e' }}>{(totalKDA.d / totalGames).toFixed(1)}</span>
+            <span style={{ color: '#c6443e' }}>{toFixed(totalKDA.d / totalGames, 1)}</span>
             <Divide>/</Divide>
-            {(totalKDA.a / totalGames).toFixed(1)}
+            {toFixed(totalKDA.a / totalGames, 1)}
           </KDAWrap>
           <RateWrap>
             <Score color={calScore(totalKDA.str / totalGames)}>
-              {(totalKDA.str / totalGames).toFixed(2)}:1
+              {toFixed(totalKDA.str / totalGames, 2)}:1
             </Score>
             <WinRate overWin>({killContribute}%)</WinRate>
           </RateWrap>
