@@ -11,9 +11,11 @@ export default function Donut() {
   const totalGames = games.length;
   const win = games.filter((game) => game.isWin).length;
   const lose = totalGames - win;
+  let contribute = 0;
 
   const totalKDA = games.reduce<{ k: number; d: number; a: number; str: number }>(
     (acc, game) => {
+      contribute += Number(game.stats.general.contributionForKillRate.split('%')[0]);
       acc['k'] = acc['k'] + game.stats.general.kill;
       acc['d'] = acc['d'] + game.stats.general.death;
       acc['a'] = acc['a'] + game.stats.general.assist;
@@ -25,6 +27,7 @@ export default function Donut() {
 
   const { k, d, a } = totalKDA;
   const isLoading = k === 0 && d === 0 && a === 0;
+  const killContribute = Math.round(contribute / totalGames);
   // FIXME: loading spinner
 
   return (
@@ -48,7 +51,7 @@ export default function Donut() {
             <Score color={calScore(totalKDA.str / totalGames)}>
               {(totalKDA.str / totalGames).toFixed(2)}:1
             </Score>
-            <WinRate overWin={calWinRate(win, lose) >= 60}>({calWinRate(win, lose)}%)</WinRate>
+            <WinRate overWin>({killContribute}%)</WinRate>
           </RateWrap>
         </Box>
       </Wrap>
