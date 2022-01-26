@@ -45,7 +45,7 @@ export default function SummonerSearchForm() {
   };
 
   const onKeyUp = (e: KeyboardEvent) => {
-    if (e.key === 'Enter' && userName !== '') {
+    if (e.key === 'Enter' && userName.trim() !== '') {
       submit();
     }
   };

@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { configureStore } from './store';
 import HomeTemplate from 'components/templates/Home';
 import SummonerTemplate from 'components/templates/Summoner';
-import NotFound from 'pages/NotFound';
+import NotFound from 'components/templates/NotFound';
 
 const store = configureStore();
 
