@@ -16,15 +16,15 @@ export const addCookie = (key: string, newName: string) => {
     if (hasName) {
       const newUserNames = deleteName(userNames, newName);
       const results = [newName, ...newUserNames].join('$');
-      document.cookie = `${key}=${encodeURIComponent(results)}; max-age=${YEAR}`;
+      document.cookie = `${key}=${encodeURIComponent(results)}; path=/; max-age=${YEAR}`;
       return;
     }
 
     document.cookie = `${key}=${encodeURIComponent(newName)}$${encodeURIComponent(
       userNames
-    )}; max-age=${YEAR}`;
+    )}; path=/; max-age=${YEAR}`;
   } else {
-    document.cookie = `${key}=${encodeURIComponent(newName)}; max-age=${YEAR}`;
+    document.cookie = `${key}=${encodeURIComponent(newName)}; path=/; max-age=${YEAR}`;
   }
 };
 
@@ -45,5 +45,5 @@ export const deleteCookie = (key: string, delName: string) => {
   const newUserNames = deleteName(userNames, delName);
   const results = newUserNames.join('$');
 
-  document.cookie = `${key}=${encodeURIComponent(results)}; max-age=${YEAR}`;
+  document.cookie = `${key}=${encodeURIComponent(results)}; path=/; max-age=${YEAR}`;
 };
