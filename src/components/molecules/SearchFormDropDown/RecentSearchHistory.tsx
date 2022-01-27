@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import IconFavoriteOn from 'assets/images/icon-favorite-on.png';
 import IconFavoriteOff from 'assets/images/icon-favorite-off.png';
@@ -8,6 +9,7 @@ import IconHistoryDelete from 'assets/images/icon-history-delete.png';
 import { addCookie, deleteCookie, getCookie } from 'utils/cookieHelper';
 import { _FAV, _HIST } from 'utils/constants';
 import EmptySummoner from 'components/atoms/EmptySummoner';
+import { actionClickSummoner } from 'modules/summoner/summoner.actions';
 
 interface IRecentSearchHistory {
   closeAll(): void;
@@ -15,6 +17,7 @@ interface IRecentSearchHistory {
 
 export default function RecentSearchHistory({ closeAll }: IRecentSearchHistory) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onClickButtonFavorite = (userName: string) => () => {
     const hasFavorite = getCookie(_FAV)
@@ -35,6 +38,7 @@ export default function RecentSearchHistory({ closeAll }: IRecentSearchHistory) 
   };
 
   const onClickUserName = (userName: string) => () => {
+    dispatch(actionClickSummoner(userName));
     closeAll();
     navigate(`/summoner/${userName}`);
   };

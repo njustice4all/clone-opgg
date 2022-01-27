@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import IconFavoriteOff from 'assets/images/icon-favorite-off.png';
 import IconHistoryDelete from 'assets/images/icon-history-delete.png';
 import { _FAV } from 'utils/constants';
 import { deleteCookie, getCookie } from 'utils/cookieHelper';
 import EmptySummoner from 'components/atoms/EmptySummoner';
+import { actionClickSummoner } from 'modules/summoner/summoner.actions';
 
 interface IFavoriteSearch {
   closeAll(): void;
@@ -14,8 +16,10 @@ interface IFavoriteSearch {
 
 export default function FavoriteSearch({ closeAll }: IFavoriteSearch) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onClickUserName = (userName: string) => () => {
+    dispatch(actionClickSummoner(userName));
     closeAll();
     navigate(`/summoner/${userName}`);
   };
